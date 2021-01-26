@@ -4,31 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".MemberJoinActivity"
     android:orientation="vertical">
-
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="email 입력하세요"
+        android:id="@+id/emailinput"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="비밀번호를 입력하세요"
+        android:id="@+id/pwinput"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="별명을 입력하세요"
+        android:id="@+id/nicknameinput"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text = "Kakao OPEN API 활용(JSON Parsing)"
-        android:id="@+id/btnKakaoOpenAPI"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "ITEM 상세보기(JSONParsing-Image다운로드)"
-        android:id="@+id/btnItemDetail"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "ITEM 추가(JSONParsing-File Upload)"
-        android:id="@+id/btnItemInsert"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "회원 가입(JSONParsing-File Upload)"
-        android:id="@+id/btnMemberJoin"/>
+        android:text="회원가입"
+        android:id="@+id/join"/>
 
 </LinearLayout>

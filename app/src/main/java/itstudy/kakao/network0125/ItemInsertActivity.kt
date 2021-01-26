@@ -1,5 +1,6 @@
 package itstudy.kakao.network0125
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +10,13 @@ import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
 import android.util.Log
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_item_insert.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
@@ -24,13 +29,33 @@ import java.util.*
 class ItemInsertActivity : AppCompatActivity() {
     val handler = object: Handler(Looper.getMainLooper()){
         override fun handleMessage(msg : Message){
+            val txt = msg.obj as String
 
+            Toast.makeText(this@ItemInsertActivity, txt,
+            Toast.LENGTH_LONG).show()
+
+            Log.e("데이터 삽입 여부", txt)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_insert)
+
+        //description에서 Enter를 누르면 키보드 숨기기
+        descriptioninput.setOnKeyListener(object:View.OnKeyListener{
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?):
+                    Boolean {
+                if(keyCode == KeyEvent.KEYCODE_ENTER ){
+                    val imm = getSystemService(
+                        Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(
+                        descriptioninput.windowToken, 0)
+                    return true
+                }
+                return false
+            }
+        })
 
         //아이템 삽입을 눌렀을 때 수행할 코드
         insert.setOnClickListener{
@@ -158,9 +183,24 @@ class ItemInsertActivity : AppCompatActivity() {
                     br.close()
                     con.disconnect()
                     //결과 확인
-                    Log.e("결과", sb.toString())
+                    //Log.e("결과", sb.toString())
 
-
+                    //받아온 데이터가 없을 때 수행
+                    val msg = Message()
+                    if(TextUtils.isEmpty(sb.toString())){
+                        msg.obj = "네트워크가 불안정해서 다운로드를 하지 못했습니다."
+                    }else{
+                        //객체로 문자열을 변환
+                        val root = JSONObject(sb.toString())
+                        //result의 값을 boolean으로 추출
+                        val result = root.getBoolean("result")
+                        if(result == true){
+                            msg.obj = "삽입 성공"
+                        }else{
+                            msg.obj = "삽입 실패"
+                        }
+                    }
+                    handler.sendMessage(msg)
                 }
             }.start()
 

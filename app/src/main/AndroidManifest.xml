@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Network0125"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ItemInsertActivity"></activity>
+        <activity android:name=".MemberJoinActivity"></activity>
+        <activity android:name=".ItemInsertActivity" />
         <activity android:name=".ItemDetailActivity" />
         <activity android:name=".KakaoOpenAPIActivity" />
         <activity android:name=".MainActivity">

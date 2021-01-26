@@ -26,5 +26,11 @@ class MainActivity : AppCompatActivity() {
                 ItemInsertActivity::class.java)
             startActivity(intent)
         }
+
+        btnMemberJoin.setOnClickListener{
+            val intent = Intent(this,
+                MemberJoinActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
