@@ -32,5 +32,11 @@ class MainActivity : AppCompatActivity() {
                 MemberJoinActivity::class.java)
             startActivity(intent)
         }
+
+        btnMemberLogin.setOnClickListener{
+            val intent = Intent(this,
+                MemberLoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

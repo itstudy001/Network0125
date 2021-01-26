@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_member_join.*
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -206,7 +208,31 @@ class MemberJoinActivity : AppCompatActivity() {
                     br.close()
                     con.disconnect()
 
-                    Log.e("가입 결과", sb.toString())
+                    //Log.e("가입 결과", sb.toString())
+                    //결과는 result: 가입 성공 여부
+                    //emailcheck: 이메일 중복 검사 통과 여부
+
+                    if(TextUtils.isEmpty(sb.toString())){
+                        msg.obj = "네트워크 사정이 좋지 않은 것 같습니다." +
+                                "잠시 후에 다시 접속해주세요"
+                        handler.sendMessage(msg)
+                        return
+                    }else{
+                        //JSON Parsing
+                        val root = JSONObject(sb.toString())
+                        val result = root.getBoolean("result")
+                        if(result == true){
+                            msg.obj = "삽입 성공"
+                        }else{
+                            val emailcheck = root.getBoolean("emailcheck")
+                            if(emailcheck == true){
+                                msg.obj = "이메일이 중복이라서 가입 실패"
+                            }else{
+                                msg.obj = "별명이 중복이라서 가입 실패"
+                            }
+                        }
+                        handler.sendMessage(msg)
+                    }
 
                 }
             }.start()

@@ -31,4 +31,11 @@
         android:text = "회원 가입(JSONParsing-File Upload)"
         android:id="@+id/btnMemberJoin"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "회원 로그인(File Upload 없는 POST 방식)"
+        android:id="@+id/btnMemberLogin"/>
+
+
 </LinearLayout>
